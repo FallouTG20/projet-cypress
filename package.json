@@ -10,7 +10,7 @@
   "license": "ISC",
   "description": "automatisation des tests fonctionnel ",
   "devDependencies": {
-    "cypress": "^14.5.1"
+    "cypress": "14.5.2"
   },
   "dependencies": {
     "aggregate-error": "^3.1.0",
@@ -178,5 +178,13 @@
     "wrap-ansi": "^7.0.0",
     "wrappy": "^1.0.2",
     "yauzl": "^2.10.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FallouTG20/projet-cypress.git"
+  },
+  "bugs": {
+    "url": "https://github.com/FallouTG20/projet-cypress/issues"
+  },
+  "homepage": "https://github.com/FallouTG20/projet-cypress#readme"
 }
