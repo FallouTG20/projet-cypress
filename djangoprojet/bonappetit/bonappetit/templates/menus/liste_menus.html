@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block title %}Bon Appétit - Nos Menus{% endblock %}
+
+{% block content %}
+<section class="ftco-section">
+  <div class="container">
+    <div class="row justify-content-center mb-5 pb-2">
+      <div class="col-md-7 text-center heading-section ftco-animate">
+        <span class="subheading">Spécialités</span>
+        <h2 class="mb-4">Nos Menus</h2>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Entrées -->
+      <div class="col-md-6 col-lg-4 mb-5">
+        <div class="menu-wrap">
+          <div class="heading-menu text-center ftco-animate">
+            <h3>Entrées</h3>
+          </div>
+          {% for menu in menus %}
+            {% if menu.get_categorie_display == "Entrée" %}
+              {% include "menus/_menu_card.html" %}
+            {% endif %}
+          {% endfor %}
+          <span class="flat flaticon-salad" style="left: 0;"></span>
+          <span class="flat flaticon-salad-1" style="right: 0;"></span>
+        </div>
+      </div>
+      <!-- Plats de résistance -->
+      <div class="col-md-6 col-lg-4 mb-5">
+        <div class="menu-wrap">
+          <div class="heading-menu text-center ftco-animate">
+            <h3>Plats de résistance</h3>
+          </div>
+          {% for menu in menus %}
+            {% if menu.get_categorie_display == "Plat" %}
+              {% include "menus/_menu_card.html" %}
+            {% endif %}
+          {% endfor %}
+          <span class="flat flaticon-omelette" style="left: 0;"></span>
+          <span class="flat flaticon-breakfast" style="right: 0;"></span>
+        </div>
+      </div>
+      <!-- Desserts -->
+      <div class="col-md-6 col-lg-4 mb-5">
+        <div class="menu-wrap">
+          <div class="heading-menu text-center ftco-animate">
+            <h3>Desserts</h3>
+          </div>
+          {% for menu in menus %}
+            {% if menu.get_categorie_display == "Dessert" %}
+              {% include "menus/_menu_card.html" %}
+            {% endif %}
+          {% endfor %}
+          <span class="flat flaticon-cupcake" style="left: 0;"></span>
+          <span class="flat flaticon-cupcake-1" style="right: 0;"></span>
+        </div>
+      </div>
+      <!-- Boissons -->
+      <div class="col-md-6 col-lg-4 mb-5">
+        <div class="menu-wrap">
+          <div class="heading-menu text-center ftco-animate">
+            <h3>Boissons</h3>
+          </div>
+          {% for menu in menus %}
+            {% if menu.get_categorie_display == "Boisson" %}
+              {% include "menus/_menu_card.html" %}
+            {% endif %}
+          {% endfor %}
+          <span class="flat flaticon-wine" style="left: 0;"></span>
+          <span class="flat flaticon-wine-1" style="right: 0;"></span>
+        </div>
+      </div>
+      <!-- Snacks -->
+      <div class="col-md-6 col-lg-4 mb-5">
+        <div class="menu-wrap">
+          <div class="heading-menu text-center ftco-animate">
+            <h3>Snacks</h3>
+          </div>
+          {% for menu in menus %}
+            {% if menu.get_categorie_display == "Snack" %}
+              {% include "menus/_menu_card.html" %}
+            {% endif %}
+          {% endfor %}
+          <span class="flat flaticon-bread" style="left: 0;"></span>
+          <span class="flat flaticon-bread-1" style="right: 0;"></span>
+        </div>
+      </div>
+      <!-- Fast-Food -->
+      <div class="col-md-6 col-lg-4 mb-5">
+        <div class="menu-wrap">
+          <div class="heading-menu text-center ftco-animate">
+            <h3>Fast-Food</h3>
+          </div>
+          {% for menu in menus %}
+            {% if menu.get_categorie_display == "Fast-Food" %}
+              {% include "menus/_menu_card.html" %}
+            {% endif %}
+          {% endfor %}
+          <span class="flat flaticon-burger" style="left: 0;"></span>
+          <span class="flat flaticon-burger-1" style="right: 0;"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

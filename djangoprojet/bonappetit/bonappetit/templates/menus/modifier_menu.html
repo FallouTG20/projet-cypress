@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}Modifier le menu{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card p-4 shadow-sm">
+                <h3 class="mb-4">Modifier le menu</h3>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+                    <div class="mb-3">
+                        <label for="id_nom" class="form-label">Nom :</label>
+                        {{ form.nom|add_class:"form-control" }}
+                        {{ form.nom.errors }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_description" class="form-label">Description :</label>
+                        {{ form.description|add_class:"form-control" }}
+                        {{ form.description.errors }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_prix" class="form-label">Prix :</label>
+                        {{ form.prix|add_class:"form-control" }}
+                        {{ form.prix.errors }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_image" class="form-label">Image :</label>
+                        {{ form.image|add_class:"form-control" }}
+                        {{ form.image.errors }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_categorie" class="form-label">Catégorie :</label>
+                        {{ form.categorie|add_class:"form-select" }}
+                        {{ form.categorie.errors }}
+                    </div>
+                    <div class="form-check mb-3">
+                        {{ form.disponible }}
+                        <label for="id_disponible" class="form-check-label">Disponible</label>
+                        {{ form.disponible.errors }}
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'gestion_menus' %}" class="btn btn-secondary">Annuler</a>
+                        <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Inscription - Bon appétit{% endblock %}
+
+{% block content %}
+<section class="py-5 overflow-hidden bg-primary" id="signup">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-5">
+        <div class="card shadow-lg border-0">
+          <div class="card-body p-5">
+            <div class="text-center mb-4">
+              <img src="{% static 'assets/img/gallery/hero-header.png' %}" alt="Logo" class="img-fluid" style="max-width:120px;">
+              <h2 class="fw-bold text-primary mt-3">Inscription</h2>
+              <p class="text-muted">Crée ton compte pour commander tes plats préférés !</p>
+            </div>
+            <form method="post" novalidate>
+              {% csrf_token %}
+              {% if form.errors %}
+                <div class="alert alert-danger">
+                  {% for field in form %}
+                    {% for error in field.errors %}
+                      <p>{{ error }}</p>
+                    {% endfor %}
+                  {% endfor %}
+                </div>
+              {% endif %}
+              <div class="mb-3">
+                <label for="username" class="form-label">Nom d'utilisateur</label>
+                <input type="text" name="username" class="form-control" id="id_username" required>
+              </div>
+              <div class="mb-3">
+                <label for="first_name" class="form-label">Prénom</label>
+                <input type="text" name="first_name" class="form-control" id="id_first_name" required>
+              </div>
+              <div class="mb-3">
+                <label for="last_name" class="form-label">Nom</label>
+                <input type="text" name="last_name" class="form-control" id="id_last_name" required>
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" name="email" class="form-control" id="id_email" required>
+              </div>
+              <div class="mb-3">
+                <label for="password1" class="form-label">Mot de passe</label>
+                <input type="password" name="password1" class="form-control" id="id_password" required>
+              </div>
+              <div class="mb-3">
+                <label for="password2" class="form-label">Confirmer le mot de passe</label>
+                <input type="password" name="password2" class="form-control" id="id_password2" required>
+              </div>
+              <div class="mb-3">
+                <label for="telephone" class="form-label">Téléphone</label>
+                <input type="tel" name="telephone" class="form-control" id="id_telephone" required>
+              </div>
+              <button type="submit" class="btn btn-danger w-100" id="yess_go" >S'inscrire</button>
+            </form>
+            <div class="mt-3 text-center">
+              <span>Déjà inscrit ?</span>
+              <a href="{% url 'login' %}" class="text-primary">Connexion</a>
+            </div>
+            <div class="mt-2 text-center">
+              <a href="{% url 'accueil' %}" class="btn btn-primary d-inline-flex align-items-center w-100">
+                <i class="fa fa-eye me-1"></i> Visiter le site sans compte
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Tableau de bord - Client{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="mb-4">Tableau de bord - Client</h2>
+            
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Voir les Menus</h5>
+                            <p class="card-text">Consultez les menus disponibles.</p>
+                            <a href="{% url 'liste_menus' %}" class="btn btn-primary">Voir les menus</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Mes Commandes</h5>
+                            <p class="card-text">Consultez l'historique de vos commandes.</p>
+                            <a href="{% url 'mes_commandes' %}" class="btn btn-primary">Voir mes commandes</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Profil</h5>
+                            <p class="card-text">Gérez vos informations personnelles.</p>
+                            <a href="{% url 'profile' %}" id="modifprofil" class="btn btn-primary">Modifier le profil</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

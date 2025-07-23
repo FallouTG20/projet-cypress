@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Confirmation de commande</h2>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3 class="card-title">Récapitulatif de votre commande</h3>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Menu</th>
+                            <th>Quantité</th>
+                            <th>Prix unitaire</th>
+                            <th>Sous-total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for menu_id, details in menus_panier.items %}
+                        <tr>
+                            <td>{{ details.menu.nom }}</td>
+                            <td>{{ details.quantite }}</td>
+                            <td>{{ details.prix }} FCFA</td>
+                            <td>{{ details.sous_total }} FCFA</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="text-end"><strong>Total</strong></td>
+                            <td><strong>{{ total }} FCFA</strong></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between">
+        <a href="{% url 'panier' %}" class="btn btn-secondary">
+            <i class="fa fa-arrow-left"></i> Retour au panier
+        </a>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">
+                <i class="fa fa-check"></i> Confirmer la commande
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3 class="mb-0">Détails de la commande #{{ commande.id }}</h3>
+                    <span class="badge {% if commande.statut == 'EN_ATTENTE' %}bg-warning
+                                    {% elif commande.statut == 'EN_PREPARATION' %}bg-info
+                                    {% elif commande.statut == 'PRETE' %}bg-primary
+                                    {% elif commande.statut == 'LIVREE' %}bg-success
+                                    {% else %}bg-danger{% endif %}">
+                        {{ commande.get_statut_display }}
+                    </span>
+                </div>
+                <div class="card-body">
+                    <div class="mb-4">
+                        <h5>Informations de livraison</h5>
+                        <p><strong>Adresse:</strong> {{ commande.adresse_livraison }}</p>
+                        <p><strong>Téléphone:</strong> {{ commande.telephone }}</p>
+                        {% if commande.notes %}
+                            <p><strong>Notes:</strong> {{ commande.notes }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-4">
+                        <h5>Articles commandés</h5>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Menu</th>
+                                        <th>Quantité</th>
+                                        <th>Prix unitaire</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for ligne in commande.lignes.all %}
+                                        <tr>
+                                            <td>{{ ligne.menu.nom }}</td>
+                                            <td>{{ ligne.quantite }}</td>
+                                            <td>{{ ligne.prix_unitaire }} FCFA</td>
+                                            <td>{{ ligne.sous_total }} FCFA</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="3" class="text-end"><strong>Total de la commande</strong></td>
+                                        <td><strong>{{ commande.total }} FCFA</strong></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <h5>Informations de la commande</h5>
+                        <p><strong>Date de commande:</strong> {{ commande.date_commande|date:"d/m/Y H:i" }}</p>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'mes_commandes' %}" class="btn btn-primary d-inline-flex align-items-center">
+                            <i class="fa fa-arrow-left me-1"></i> Retour aux commandes
+                        </a>
+                        {% if commande.statut == 'EN_ATTENTE' %}
+                            <a href="{% url 'annuler_commande' commande.id %}" class="btn btn-danger"
+                               onclick="return confirm('Êtes-vous sûr de vouloir annuler cette commande ?')">
+                                <i class="fa fa-times"></i> Annuler la commande
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,30 @@
+/* pour que le texte des boutons soit toujours visible */
+.btn-group .btn {
+    color: inherit !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+
+
+html, body {
+    height: 100%;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+main.main {
+    flex: 1 0 auto;
+}
+footer {
+    flex-shrink: 0;
+}
+
+.btn-danger {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: inline-block !important;
+}

@@ -1,0 +1,257 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <!-- =======================
+       Styles personnalisés
+  ======================== -->
+  <style>
+    /* Supprimer les flèches sur les input type number pour Chrome, Safari, Edge, Opera */
+    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button { 
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    /* Pour Firefox */
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+    body { overflow-x: hidden; }
+  </style>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!-- =======================
+       Titre de la page
+  ======================== -->
+  <title>{% block title %}Bon appétit - C'est bonn my G !{% endblock %}</title>
+
+  <!-- =======================
+       Favicons
+  ======================== -->
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/img/favicons/apple-touch-icon.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'assets/img/favicons/favicon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'assets/img/favicons/favicon-16x16.png' %}">
+  <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/img/favicons/favicon.ico' %}">
+  <link rel="manifest" href="{% static 'assets/img/favicons/manifest.json' %}">
+  <meta name="msapplication-TileImage" content="{% static 'assets/img/favicons/mstile-150x150.png' %}">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- =======================
+       Feuilles de style
+  ======================== -->
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400;600;700;900&amp;display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="{% static 'assets/css/bootstrap-datepicker.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/animate.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/owl.carousel.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/owl.theme.default.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/magnific-popup.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/jquery.timepicker.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/flaticon.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}">
+  {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+  <!-- =======================
+       Contenu principal
+  ======================== -->
+  <main class="main" id="top" style="margin-top: 80px;">
+    <!-- =======================
+         Barre de navigation
+    ======================== -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" data-navbar-on-scroll="data-navbar-on-scroll">
+      <div class="container">
+        <!-- Logo -->
+        <a class="navbar-brand d-inline-flex" href="{% url 'accueil' %}">
+          <img class="d-inline-block" src="{% static 'assets/img/gallery/logo.svg' %}" alt="logo" />
+          <span class="text-1000 fs-3 fw-bold ms-2 text-gradient">Bon Appétit</span>
+        </a>
+        <!-- Bouton menu mobile -->
+        <button class="navbar-toggler" id="id_menus" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"> </span>
+        </button>
+        <!-- Liens de navigation -->
+        <div class="collapse navbar-collapse border-top border-lg-0 my-2 mt-lg-0" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <!-- Lien Accueil -->
+            <li class="nav-item">
+              <a class="nav-link active" id="id_accueil" aria-current="page" href="{% url 'accueil' %}">Accueil</a>
+            </li>
+            <!-- Lien Menus -->
+            <li class="nav-item">
+              <a class="nav-link" id="id_menus" href="{% url 'liste_menus' %}">Menus</a>
+            </li>
+            <!-- Gestion Authentification -->
+            {% if user.is_authenticated %}
+              <!-- Profil utilisateur -->
+              <li class="nav-item">
+                <a class="nav-link" id="id_monprofil" href="{% url 'profile' %}"><i class="fa fa-user"></i> Mon profil</a>
+              </li>
+              <!-- Tableau de bord -->
+              <li class="nav-item">
+                <a class="nav-link" id="id_tdb" href="{% url 'dashboard' %}"><i class="fa fa-tachometer"></i> Tableau de bord</a>
+              </li>
+              <!-- Panier pour client -->
+              {% if user.is_client %}
+                <li class="nav-item">
+                  <a class="nav-link positon-relative" href="{% url 'panier' %}">
+                    <i class="fa fa-shopping-cart"></i> Panier
+                    <span class="badge bg-primary">{{ request.session.panier|length }}</span>
+                  </a>
+                </li>
+              {% endif %}
+              <!-- Gestion des commandes pour staff -->
+              {% if user.is_staff %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'gestion_commandes' %}">
+                    <i class="fa fa-cog" id="id_gestcom"></i> Gestion des commandes
+                  </a>
+                </li>
+              {% endif %}
+              <!-- Notifications pour client -->
+              {% if user.is_authenticated and user.is_client %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'notifications' %}">
+                    <i class="fa fa-bell" id="id_notif"></i> Notifications
+                    <span id="notification-badge" class="badge bg-danger"></span>
+                  </a>
+                </li>
+              {% endif %}
+              <!-- Déconnexion -->
+              <li class="nav-item">
+                <form method="post" action="{% url 'logout' %}" class="d-inline">
+                  {% csrf_token %}
+                  <button type="submit" id="id_deconnexion" class="nav-link border-0 bg-transparent"><i class="fa fa-sign-out"></i> Déconnexion</button>
+                </form>
+              </li>
+            {% else %}
+              <!-- Connexion / Inscription -->
+              <li class="nav-item">
+                <a class="nav-link" id="id_connexion" href="{% url 'login' %}"><i class="fa fa-user"></i> Se connecter</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="id_inscription" href="{% url 'register' %}"><i class="fa fa-user-plus"></i> Inscription</a>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- =======================
+         Fin Navbar
+    ======================== -->
+
+    <!-- =======================
+         Bloc de contenu principal
+    ======================== -->
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- =======================
+       Pied de page
+  ======================== -->
+  <footer class="bg-1000 text-light pt-4 pb-0">
+    <div class="container">
+      <div class="row gy-3">
+        <!-- Adresse -->
+        <div class="col-lg-3 col-md-6 d-flex">
+          <i class="fa fa-map-marker" aria-hidden="true"></i>
+          <address>
+            <h4>Adresse</h4>
+            <p>Avenue Cheick Anta Diop<br>Dakar, Sénégal</p>
+          </address>
+        </div>
+        <!-- Contacts -->
+        <div class="col-lg-3 col-md-6 d-flex">
+          <i class="fa fa-phone" aria-hidden="true"></i>
+          <div>
+            <h4>Contacts</h4>
+            <p>
+              <strong>Téléphone:</strong> <span>+1 5589 55488 55</span><br>
+              <strong>Email:</strong> <span>info@example.com</span><br>
+            </p>
+          </div>
+        </div>
+        <!-- Horaires -->
+        <div class="col-lg-3 col-md-6 d-flex">
+          <i class="fa fa-clock-o" aria-hidden="true"></i>
+          <div>
+            <h4>Horaires</h4>
+            <p>
+              <strong>Lun-Sam:</strong> <span>11h - 23h</span><br>
+              <strong>Dimanche</strong>: <span>Fermé</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <hr class="text-900" />
+      <div class="row flex-center pb-0">
+        <div class="col-md-6 order-0">
+          <p class="text-200 text-center text-md-start">
+            Tous droits réservés &copy; Bon Appétit, <span id="displayYear"></span>
+          </p>
+        </div>
+        <div class="col-md-6 order-1">
+          <p class="text-200 text-center text-md-end">
+            Fait avec&nbsp;
+            <svg class="bi bi-suit-heart-fill" xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="#FFB30E" viewBox="0 0 16 16">
+              <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"></path>
+            </svg>&nbsp;par&nbsp;<a class="text-200 fw-bold" href="https://themewagon.com/" target="_blank">Falloulou & Mark</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =======================
+       Scripts JS
+  ======================== -->
+  <script src="{% static 'assets/js/jquery.min.js' %}"></script>
+  <script src="{% static 'vendors/@popperjs/popper.min.js' %}"></script>
+  <script src="{% static 'vendors/bootstrap/bootstrap.min.js' %}"></script>
+  <script src="{% static 'vendors/is/is.min.js' %}"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+  <script src="{% static 'assets/js/theme.js' %}"></script>
+  <script src="{% static 'assets/js/jquery-migrate-3.0.1.min.js' %}"></script>
+  <script src="{% static 'assets/js/jquery.easing.1.3.js' %}"></script>
+  <script src="{% static 'assets/js/jquery.waypoints.min.js' %}"></script>
+  <script src="{% static 'assets/js/jquery.stellar.min.js' %}"></script>
+  <script src="{% static 'assets/js/owl.carousel.min.js' %}"></script>
+  <script src="{% static 'assets/js/jquery.magnific-popup.min.js' %}"></script>
+  <script src="{% static 'assets/js/jquery.animateNumber.min.js' %}"></script>
+  <script src="{% static 'assets/js/bootstrap-datepicker.js' %}"></script>
+  <script src="{% static 'assets/js/jquery.timepicker.min.js' %}"></script>
+  <script src="{% static 'assets/js/scrollax.min.js' %}"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=VOTRE_CLE_API&sensor=false"></script>
+  <script src="{% static 'assets/js/google-map.js' %}"></script>
+  <script src="{% static 'assets/js/main.js' %}"></script>
+  {% block extra_js %}
+  <script>
+    // Affichage du nombre de notifications non lues pour les clients
+    document.addEventListener('DOMContentLoaded', function() {
+      {% if not user.is_staff %}
+        fetch('/commandes/notifications/nombre-non-lues/')
+          .then(response => response.json())
+          .then(data => {
+            const badge = document.querySelector('#notification-badge');
+            if (badge) {
+              if (data.nombre > 0) {
+                badge.textContent = data.nombre;
+                badge.style.display = 'inline';
+              } else {
+                badge.style.display = 'none';
+              }
+            }
+          });
+      {% endif %}
+    });
+  </script>
+  {% endblock %}
+</body>
+</html>

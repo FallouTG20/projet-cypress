@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="card mx-auto" style="max-width: 500px;">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Informations du Client</h4>
+        </div>
+        <div class="card-body">
+            <p><strong>Nom d'utilisateur :</strong> {{ user_detail.username }}</p>
+            <p><strong>Prénom :</strong> {{ user_detail.first_name }}</p>
+            <p><strong>Nom :</strong> {{ user_detail.last_name }}</p>
+            <p><strong>Email :</strong> {{ user_detail.email }}</p>
+            <p><strong>Téléphone :</strong> {{ user_detail.telephone }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %} 

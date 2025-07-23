@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Bon Appétit - Nos Menus{% endblock %}
+
+{% block content %}
+
+<section class="ftco-section">
+  <div class="container">
+    <div class="row justify-content-center mb-5 pb-2">
+      <div class="col-md-7 text-center heading-section ftco-animate">
+        <span class="subheading">Spécialités</span>
+        <h2 class="mb-4">Nos Menus</h2>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-md-6 col-lg-4">
+        
+        <div class="menu-wrap">
+          <div class="heading-menu text-center ftco-animate">
+            <h3>Plats de résistance</h3>
+          </div>
+          {% for menu in menus %}
+          {% if menu.get_categorie_display == "Plat" %}
+          <div class="menus d-flex ftco-animate">
+            {% if menu.image %}
+            <div class="menu-img img" style="background-image: url('{{ menu.image.url }}');"></div>
+            {% endif %}
+            <div class="text">
+              <div class="d-flex">
+                <div class="one-half">
+                  <h3>{{ menu.nom }}</h3>
+                </div>
+                <div class="one-forth">
+                  <span class="price">${{ menu.prix }}</span>
+                </div>
+              </div>
+              <p><span>{{ menu.description }}</p>
+            </div>
+          </div>
+          {% endif %}
+          {% endfor %}
+          <span class="flat flaticon-omelette" style="left: 0;"></span>
+          <span class="flat flaticon-breakfast" style="right: 0;"></span>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        
+        <div class="menu-wrap">
+          <div class="heading-menu text-center ftco-animate">
+            <h3>Entrées</h3>
+          </div>
+          {% for menu in menus %}
+          {% if menu.get_categorie_display == "Entrée" %} 
+          <div class="menus d-flex ftco-animate">
+            {% if menu.image %}
+            <div class="menu-img img" style="background-image: url('{{ menu.image.url }}');"></div>
+            {% endif %}
+            <div class="text">
+              <div class="d-flex">
+                <div class="one-half">
+                  <h3>{{ menu.nom }}</h3>
+                </div>
+                <div class="one-forth">
+                  <span class="price">${{ menu.prix }}</span>
+                </div>
+              </div>
+              <p><span>{{ menu.description }}</p>
+            </div>
+          </div>
+          {% endif %}
+          {% endfor %}
+          <span class="flat flaticon-bread" style="left: 0;"></span>
+          <span class="flat flaticon-breakfast" style="right: 0;"></span>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        
+        <div class="menu-wrap">
+          <div class="heading-menu text-center ftco-animate">
+            <h3>Désserts</h3>
+          </div>
+          {% for menu in menus %} 
+          {% if menu.get_categorie_display == "Dessert" %}
+          <div class="menus d-flex ftco-animate">
+            {% if menu.image %}
+            <div class="menu-img img" style="background-image: url('{{ menu.image.url }}');"></div>
+            {% endif %}
+            <div class="text">
+              <div class="d-flex">
+                <div class="one-half">
+                  <h3>{{ menu.nom }}</h3>
+                </div>
+                <div class="one-forth">
+                  <span class="price">${{ menu.prix }}</span>
+                </div>
+              </div>
+              <p><span>{{ menu.description }}</p>
+            </div>
+          </div>
+          {% endif %}
+          {% endfor %}
+          <span class="flat flaticon-cupcake" style="left: 0;"></span>
+          <span class="flat flaticon-ice-cream" style="right: 0;"></span>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        
+        <div class="menu-wrap">
+          <div class="heading-menu text-center ftco-animate">
+            <h3>Boissons</h3>
+          </div>
+          {% for menu in menus %} 
+          {% if menu.get_categorie_display == "Boisson" %}
+          <div class="menus d-flex ftco-animate">
+            {% if menu.image %}
+            <div class="menu-img img" style="background-image: url('{{ menu.image.url }}');"></div>
+            {% endif %}
+            <div class="text">
+              <div class="d-flex">
+                <div class="one-half">
+                  <h3>{{ menu.nom }}</h3>
+                </div>
+                <div class="one-forth">
+                  <span class="price">${{ menu.prix }}</span>
+                </div>
+              </div>
+              <p><span>{{ menu.description }}</p>
+            </div>
+          </div>
+          {% endif %}
+          {% endfor %}
+          <span class="flat flaticon-wine" style="left: 0;"></span>
+          <span class="flat flaticon-wine-1" style="right: 0;"></span>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        
+        <div class="menu-wrap">
+          <div class="heading-menu text-center ftco-animate">
+            <h3>Snacks</h3>
+          </div>
+          {% for menu in menus %}
+          {% if menu.get_categorie_display == "Snack" %} 
+          <div class="menus d-flex ftco-animate">
+            {% if menu.image %}
+            <div class="menu-img img" style="background-image: url('{{ menu.image.url }}');"></div>
+            {% endif %}
+            <div class="text">
+              <div class="d-flex">
+                <div class="one-half">
+                  <h3>{{ menu.nom }}</h3>
+                </div>
+                <div class="one-forth">
+                  <span class="price">${{ menu.prix }}</span>
+                </div>
+              </div>
+              <p><span>{{ menu.description }}</p>
+            </div>
+          </div>
+          {% endif %}
+          {% endfor %}
+          <span class="flat flaticon-bread" style="left: 0;"></span>
+          <span class="flat flaticon-breakfast" style="right: 0;"></span>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        
+        <div class="menu-wrap">
+          <div class="heading-menu text-center ftco-animate">
+            <h3>Fast-Food</h3>
+          </div>
+          {% for menu in menus %}
+          {% if menu.get_categorie_display == "Fast-Food" %}  
+          <div class="menus d-flex ftco-animate">
+            {% if menu.image %}
+            <div class="menu-img img" style="background-image: url('{{ menu.image.url }}');"></div>
+            {% endif %}
+            <div class="text">
+              <div class="d-flex">
+                <div class="one-half">
+                  <h3>{{ menu.nom }}</h3>
+                </div>
+                <div class="one-forth">
+                  <span class="price">${{ menu.prix }}</span>
+                </div>
+              </div>
+              <p><span>{{ menu.description }}</p>
+            </div>
+          </div>
+          {% endif %}
+          {% endfor %}
+          <span class="flat flaticon-burger" style="left: 0;"></span>
+          <span class="flat flaticon-pizza" style="right: 0;"></span>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</section>
+{% endblock %}

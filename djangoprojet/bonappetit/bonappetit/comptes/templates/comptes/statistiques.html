@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Statistiques du Restaurant</h2>
+
+    <!-- Cartes de statistiques générales -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Total des Commandes</h5>
+                    <h2 class="card-text">{{ total_commandes }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Commandes Aujourd'hui</h5>
+                    <h2 class="card-text">{{ commandes_aujourdhui }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Commandes cette Semaine</h5>
+                    <h2 class="card-text">{{ commandes_semaine }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-warning text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Chiffre d'Affaires</h5>
+                    <h2 class="card-text">{{ chiffre_affaires }} FCFA</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Graphiques côte à côte -->
+    <div class="row mb-4">
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Commandes par Menu</h4>
+                </div>
+                <div class="card-body">
+                    <canvas id="menuChart" style="height:280px;"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Commandes par Jour de la Semaine</h4>
+                </div>
+                <div class="card-body">
+                    <canvas id="dayChart" style="height:280px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top 10 des utilisateurs -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h4>Top 10 des Utilisateurs</h4>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Rang</th>
+                            <th>Utilisateur</th>
+                            <th>Nombre de Commandes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in top_users %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td><a href="{% url 'profile_detail' user.client__id %}">{{ user.client__username }}</a></td>
+                            <td>{{ user.total_orders }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // Données pour le graphique des menus
+    const menuData = {
+        labels: {{ menu_labels|safe }},
+        datasets: [{
+            label: 'Nombre de commandes',
+            data: {{ menu_data|safe }},
+            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+        }]
+    };
+
+    // Données pour le graphique des jours
+    const dayData = {
+        labels: ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'],
+        datasets: [{
+            label: 'Nombre de commandes',
+            data: {{ day_data|safe }},
+            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1
+        }]
+    };
+
+    // Configuration des graphiques
+    const menuConfig = {
+        type: 'bar',
+        data: menuData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    };
+
+    const dayConfig = {
+        type: 'bar',
+        data: dayData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    };
+
+    // Création des graphiques
+    new Chart(document.getElementById('menuChart'), menuConfig);
+    new Chart(document.getElementById('dayChart'), dayConfig);
+</script>
+{% endblock %} 
