@@ -17,6 +17,14 @@ pipeline {
                 '''
             }
         }
+        stage('Setup Node Env') {
+            steps {
+                bat '''
+                    npm install
+                    npx cypress install
+                '''
+            }
+        }
         stage('Start Django server') {
             steps {
                 bat '''
