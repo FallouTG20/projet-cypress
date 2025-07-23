@@ -22,6 +22,7 @@ pipeline {
                 bat '''
                     npm install
                     npx cypress install
+                    npx cypress verify
                 '''
             }
         }
