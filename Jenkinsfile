@@ -1,45 +1,24 @@
 pipeline {
   agent any
 
-  environment {
-    DOCKER_NETWORK = "projet-cypress_default"
-  }
-
   stages {
-    stage('Checkout') {
+    stage('Start Django server') {
       steps {
-        checkout scm
-      }
-    }
-
-    stage('Start Django') {
-      steps {
-        bat 'docker-compose up -d django'
-      }
-    }
-
-    stage('Wait for Django to be ready') {
-      steps {
-        bat 'timeout /t 10 /nobreak'
-      }
-    }
-
-    stage('Build Docker Image') {
-      steps {
-        bat 'docker build -t cypress-tests .'
+        dir('djangoprojet/bonappetit/bonappetit') {
+          script {
+            bat 'dir'
+            bat '..\\..\\myenv\\Scripts\\python.exe manage.py runserver 127.0.0.1:8000'
+          }
+        }
       }
     }
 
     stage('Run Cypress Tests') {
       steps {
-        bat 'docker run --rm --network %DOCKER_NETWORK% cypress-tests'
+        dir('.') {
+          bat 'npx cypress run'
+        }
       }
-    }
-  }
-
-  post {
-    always {
-      bat 'docker-compose down'
     }
   }
 }
