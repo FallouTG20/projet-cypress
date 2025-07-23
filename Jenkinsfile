@@ -1,13 +1,16 @@
 pipeline {
     agent any
 
+    environment {
+        CYPRESS_CACHE_FOLDER = 'C:\\Users\\fallo\\AppData\\Local\\Cypress\\Cache'
+    }
+
     stages {
         stage('Checkout') {
             steps {
                 checkout scm
             }
         }
-
         stage('Setup Python Env') {
             steps {
                 bat '''
@@ -18,17 +21,19 @@ pipeline {
                 '''
             }
         }
-
         stage('Setup Node Env') {
             steps {
                 bat '''
-                    set CYPRESS_CACHE_FOLDER=%WORKSPACE%\\.cache\\Cypress
                     npm install
                     npx cypress install --force
                 '''
             }
         }
-
+        stage('Verify Cypress') {
+            steps {
+                bat 'npx cypress verify'
+            }
+        }
         stage('Start Django server') {
             steps {
                 bat '''
@@ -37,17 +42,14 @@ pipeline {
                 '''
             }
         }
-
         stage('Run Cypress Tests') {
             steps {
                 bat '''
-                    set CYPRESS_CACHE_FOLDER=%WORKSPACE%\\.cache\\Cypress
                     call myenv\\Scripts\\activate
                     npx cypress run
                 '''
             }
         }
-
         stage('Stop Django server') {
             steps {
                 bat '''
