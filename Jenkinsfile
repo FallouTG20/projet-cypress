@@ -27,14 +27,12 @@ pipeline {
         }
         stage('Start Django server') {
             steps {
-                bat '''
-                    call myenv\\Scripts\\activate
-                    start /B python manage.py runserver 127.0.0.1:8000
-                '''
-                // Note : je suppose que Jenkins est dans le dossier racine où se trouve manage.py
-            }
-            dir('djangoprojet\\bonappetit\\bonappetit') {
-                // Si nécessaire, déplace ce stage dans ce dir pour que manage.py soit trouvé
+                dir('djangoprojet\\bonappetit\\bonappetit') {
+                    bat '''
+                        call ..\\..\\myenv\\Scripts\\activate
+                        start /B python manage.py runserver 127.0.0.1:8000
+                    '''
+                }
             }
         }
         stage('Run Cypress Tests') {
@@ -48,7 +46,6 @@ pipeline {
     }
     post {
         always {
-            // Arrête le serveur Django (kill python.exe)
             bat 'taskkill /IM python.exe /F || exit 0'
         }
     }
