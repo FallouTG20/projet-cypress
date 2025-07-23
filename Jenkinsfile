@@ -17,14 +17,16 @@ pipeline {
                 '''
             }
         }
-        stage('Setup Node Env') {
+	stage('Setup Node Env') {
             steps {
                 bat '''
-                    npm install
-                    npx cypress install --force
-                '''
+                     set CYPRESS_CACHE_FOLDER=%WORKSPACE%\\.cache\\Cypress
+                     npm install
+                     npx cypress install --force
+               '''
             }
         }
+
         stage('Verify Cypress') {
             steps {
                 bat 'npx cypress verify'
@@ -38,14 +40,16 @@ pipeline {
                 '''
             }
         }
-        stage('Run Cypress Tests') {
+	stage('Run Cypress Tests') {
             steps {
                 bat '''
+                    set CYPRESS_CACHE_FOLDER=%WORKSPACE%\\.cache\\Cypress
                     call myenv\\Scripts\\activate
                     npx cypress run
-                '''
+               '''
             }
         }
+
         stage('Stop Django server') {
             steps {
                 bat '''
