@@ -1,24 +1,37 @@
 pipeline {
-  agent any
+    agent any
 
-  stages {
-    stage('Start Django server') {
-      steps {
-        dir('djangoprojet/bonappetit/bonappetit') {
-          script {
-            bat 'dir'
-            bat '..\\..\\myenv\\Scripts\\python.exe manage.py runserver 127.0.0.1:8000'
-          }
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
         }
-      }
-    }
-
-    stage('Run Cypress Tests') {
-      steps {
-        dir('.') {
-          bat 'npx cypress run'
+        stage('Setup Python Env') {
+            steps {
+                bat '''
+                    python -m venv myenv
+                    call myenv\\Scripts\\activate
+                    pip install --upgrade pip
+                    pip install -r requirements.txt
+                '''
+            }
         }
-      }
+        stage('Start Django server') {
+            steps {
+                bat '''
+                    call myenv\\Scripts\\activate
+                    start /B python djangoprojet\\bonappetit\\bonappetit\\manage.py runserver 127.0.0.1:8000
+                '''
+            }
+        }
+        stage('Run Cypress Tests') {
+            steps {
+                bat '''
+                    call myenv\\Scripts\\activate
+                    npx cypress run
+                '''
+            }
+        }
     }
-  }
 }
