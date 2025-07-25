@@ -1,0 +1,29 @@
+pipeline {
+  agent any
+
+  stages {
+    stage('Checkout') {
+      steps {
+        git 'https://github.com/FallouTG20/projet-cypress.git'
+      }
+    }
+
+    stage('Build Docker Image') {
+      steps {
+        script {
+          docker.build('cypress-tests')
+        }
+      }
+    }
+
+    stage('Run Cypress Tests') {
+      steps {
+        script {
+          docker.image('cypress-tests').inside {
+            sh 'npx cypress run'
+          }
+        }
+      }
+    }
+  }
+}
