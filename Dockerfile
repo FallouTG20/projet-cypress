@@ -1,18 +1,14 @@
-# Utiliser l'image officielle Cypress
-FROM cypress/included:latest
+# Utilise une image officielle Cypress
+FROM cypress/included:12.17.4
 
-# Définir le répertoire de travail
-WORKDIR /app
+# Crée un dossier pour ton code
+WORKDIR /e2e
 
-# Copier les fichiers de configuration
-COPY package*.json ./
-COPY cypress.config.js ./
+# Copie ton projet dans le conteneur
+COPY . .
 
-# Copier les tests et fixtures
-COPY cypress ./cypress
-
-# Installer les dépendances (si nécessaire)
-RUN npm ci
+# Installe les dépendances
+RUN npm install
 
 # Commande par défaut pour lancer les tests
 CMD ["npx", "cypress", "run"]
