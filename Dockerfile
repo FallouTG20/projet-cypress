@@ -1,14 +1,13 @@
-# Utilise une image officielle Cypress
 FROM cypress/included:12.17.4
 
-# Crée un dossier pour ton code
 WORKDIR /e2e
 
-# Copie ton projet dans le conteneur
 COPY . .
 
-# Installe les dépendances
 RUN npm install
 
-# Commande par défaut pour lancer les tests
-CMD ["npx", "cypress", "run"]
+# Crée le dossier results pour stocker les rapports JUnit
+RUN mkdir -p results
+
+# Lance Cypress avec génération de rapport JUnit dans results/
+CMD ["npx", "cypress", "run", "--reporter", "junit", "--reporter-options", "mochaFile=results/results-[hash].xml,toConsole=true"]
