@@ -13,9 +13,8 @@ pipeline {
     stage('Run Cypress Tests') {
       steps {
         script {
-          docker.image('cypress-tests').inside {
-            sh 'npx cypress run'
-          }
+          // ⚠️ Sur Windows, évite `inside {}` ➜ utilise `run()` directement
+          docker.image('cypress-tests').run()
         }
       }
     }
