@@ -2,12 +2,6 @@ pipeline {
   agent any
 
   stages {
-    stage('Checkout') {
-      steps {
-        git 'https://github.com/FallouTG20/projet-cypress.git'
-      }
-    }
-
     stage('Build Docker Image') {
       steps {
         script {
