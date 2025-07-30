@@ -3,7 +3,7 @@ const { defineConfig } = require('cypress');
 module.exports = defineConfig({
   e2e: {
     // ✅ On fixe le baseUrl sur le site de test public
-    baseUrl: 'https://example.cypress.io',
+    baseUrl: 'https://jsonplaceholder.typicode.com',
 
     // ✅ Dossiers par défaut (tu peux les garder tels quels)
     fixturesFolder: 'cypress/fixtures',
